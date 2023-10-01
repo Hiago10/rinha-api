@@ -1,0 +1,50 @@
+version: "3.9"
+
+networks:
+  rinha-network:
+    driver: bridge
+    
+services:
+  rinha-mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "rinha-mysql", "-uroot"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "3316:3306"
+    networks:
+      - rinha-network
+  
+  spring-api1: &spring-api
+    image: rinha-api
+    hostname: api1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: rinha-mysql
+    networks:
+      - rinha-network
+    depends_on:
+      rinha-mysql:
+        condition: service_healthy
+  
+  spring-api2:
+    <<: *spring-api
+    hostname: api2
+        
+  rinha-nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "9999:9999"
+    networks:
+      - rinha-network
+    depends_on:
+      - spring-api1
+      - spring-api2
