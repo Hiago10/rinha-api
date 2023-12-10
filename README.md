@@ -1,6 +1,6 @@
 # Rinha-api
 
-O projeto rinha-api é uma aplicação que utiliza o docker para criar várias instâncias da imagem de uma API Spring. Para fazermos uma simulação de um aplicação em produção que geralmente possui balanceamento de carga que garante a distribuição equitativa das requisições entre as APIs, todas elas estarão apontando para o mesmo banco de dados MySQL. O papel de balanceamento de carga será desempenhado pelo Nginx, que utilizará o algoritmo round-robin como estratégia.
+O projeto rinha-api é uma aplicação baseada em Spring, projetada para operar em um ambiente Docker. Este projeto simula um cenário de produção, com várias instâncias da API Spring compartilhando o mesmo banco de dados MySQL e empregando balanceamento de carga. Para distribuir equitativamente as requisições entre as instâncias da API, utilizamos o NGINX como um balanceador de carga, configurado com o algoritmo round-robin. Essa estratégia assegura um tratamento eficiente de todas as requisições recebidas.
 
 ## Executar o Projeto Localmente 
 
