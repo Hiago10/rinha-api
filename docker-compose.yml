@@ -25,6 +25,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        JAR_FILE: rinha-de-backend-2023-java-0.0.1-SNAPSHOT.jar
     environment:
       DB_HOST: rinha-mysql
     networks:
